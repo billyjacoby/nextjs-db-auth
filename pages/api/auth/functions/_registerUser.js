@@ -16,7 +16,6 @@ export async function _registerUser(username, email, password, res) {
       const hashedPassword = await hash(password, salt);
 
       // TODO: setup proper user info here...
-
       const result = await user.insertOne({
         username,
         email,
@@ -27,6 +26,7 @@ export async function _registerUser(username, email, password, res) {
           testSetting: "this is a test",
         },
       });
+      // TODO: Log user in and add cookies to browser window
 
       return result;
     } else

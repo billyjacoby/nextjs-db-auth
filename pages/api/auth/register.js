@@ -1,8 +1,9 @@
 import { _registerUser } from "./functions/_registerUser.js";
+import { _logUserIn } from "./functions/_logUserIn.js";
+import Cookies from "cookies";
 
 const register = async (req, res) => {
   try {
-    console.log(!!req.body.username);
     const user = await _registerUser(
       req.body.username,
       req.body.email,
@@ -10,7 +11,19 @@ const register = async (req, res) => {
       res
     );
     if (!user.error) {
-      console.log(user);
+      // TODO: Factor this into its own file (logging in and setting cookies)
+      const { refreshCookie, accessCookie } = await _logUserIn(
+        user.insertedId.toString(),
+        req
+      );
+      const cookies = new Cookies(req, res);
+      cookies.set("refreshToken", refreshCookie.refreshToken, {
+        ...refreshCookie.options,
+      });
+      cookies.set("accessToken", accessCookie.accessToken, {
+        ...accessCookie.options,
+      });
+      // TODO: send the user back to the home page here
       res.status(200).json({
         data: {
           status: "SUCCESS",

@@ -28,8 +28,11 @@ const FormContainer = styled.form`
 
 const Button = styled.button``;
 
-export default function Login({ isAuthenticated }) {
-  const [isAuth, setIsAuth] = useState(isAuthenticated);
+export default function Login({ user }) {
+  const [userData, setUserData] = useState(user);
+  const [isAuth, setIsAuth] = useState(!!user);
+
+  console.log("userData: ", userData);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -53,6 +56,7 @@ export default function Login({ isAuthenticated }) {
     } else {
       setIsAuth(true);
       e.target.reset();
+      console.log(response.data);
       console.log("Authorized!");
     }
   };

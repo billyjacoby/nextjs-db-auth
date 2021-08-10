@@ -7,13 +7,13 @@ const authorize = async function (req, res) {
   console.log(data);
   try {
     console.log(data.body);
-    const { isAuthorized, userId } = await _authorize(
+    const { isAuthorized, user } = await _authorize(
       data.username,
       data.password
     );
 
     if (isAuthorized) {
-      const { refreshCookie, accessCookie } = await _logUserIn(userId, req);
+      const { refreshCookie, accessCookie } = await _logUserIn(user._id, req);
       const cookies = new Cookies(req, res);
       cookies.set("refreshToken", refreshCookie.refreshToken, {
         ...refreshCookie.options,
@@ -24,7 +24,7 @@ const authorize = async function (req, res) {
       res.status(200).json({
         data: {
           status: "success",
-          userId,
+          user,
         },
       });
     } else {

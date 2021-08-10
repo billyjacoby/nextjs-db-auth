@@ -1,25 +1,32 @@
 import Cookies from "cookies";
+import { _getUserFromCookie } from "../pages/api/auth/functions/_user";
 
 async function checkAuthServer(context) {
   const { req, res } = context;
   const cookies = new Cookies(req, res);
-  const refreshToken = cookies.get("refreshToken");
-  const accessToken = cookies.get("accessToken");
 
-  // TODO: Implement the logic to check cookies here and return the user object
-
-  console.log();
-  //* Soft auth check only - Just checks to see if these tokens exist.
-  //* Ensure that these are verified on all server calls
-  let isAuthenticated = false;
-  if (accessToken || refreshToken) {
-    isAuthenticated = true;
+  const userData = await _getUserFromCookie(cookies);
+  if (userData) {
+    console.log("user here");
+    let { username, title, email, settings } = userData;
+    const user = {
+      _id: userData._id.toString(),
+      username,
+      title,
+      email,
+      settings,
+    };
+    return {
+      props: {
+        user,
+      },
+    };
+  } else {
+    return {
+      props: {
+        user: null,
+      },
+    };
   }
-  return {
-    props: {
-      isAuthenticated,
-    },
-  };
 }
-
 export default checkAuthServer;
