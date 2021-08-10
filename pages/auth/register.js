@@ -48,6 +48,7 @@ export default function Register() {
     if (response.error) {
       console.log("Error: ", response);
     } else {
+      //* Redirect to home page here
       console.log(response.data);
     }
   };

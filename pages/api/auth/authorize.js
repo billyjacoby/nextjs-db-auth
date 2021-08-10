@@ -4,9 +4,7 @@ import Cookies from "cookies";
 
 const authorize = async function (req, res) {
   let data = JSON.parse(req.body);
-  console.log(data);
   try {
-    console.log(data.body);
     const { isAuthorized, user } = await _authorize(
       data.username,
       data.password

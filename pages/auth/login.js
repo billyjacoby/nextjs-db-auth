@@ -30,9 +30,6 @@ const Button = styled.button``;
 
 export default function Login({ user }) {
   const [userData, setUserData] = useState(user);
-  const [isAuth, setIsAuth] = useState(!!user);
-
-  console.log("userData: ", userData);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -51,25 +48,23 @@ export default function Login({ user }) {
     const response = await data.json();
 
     if (response.data.error) {
-      // console.log("Invalid Credentials");
       console.log(response.data.error);
     } else {
-      setIsAuth(true);
       e.target.reset();
-      console.log(response.data);
+      setUserData(response.data.user);
       console.log("Authorized!");
     }
   };
 
   const logoutClick = () => {
-    setIsAuth(false);
+    setUserData(null);
     fetch("/api/auth/logout");
   };
   return (
     <OuterContainer>
       <Container>
         <FormContainer onSubmit={onSubmit}>
-          {isAuth ? "logged in!" : <h1>login</h1>}
+          {userData ? `hello ${userData.username}!` : <h1>login</h1>}
 
           <label htmlFor="username">
             <input type="text" name="username" placeholder="username" />
@@ -78,7 +73,7 @@ export default function Login({ user }) {
             <input type="password" name="password" placeholder="password" />
           </label>
           <Button type="submit">login</Button>
-          {isAuth ? (
+          {userData ? (
             <Button type="button" onClick={logoutClick}>
               logout
             </Button>

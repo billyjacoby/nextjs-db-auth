@@ -4,7 +4,6 @@ const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const { isAuthorized, userId } = await _authorize(username, password);
-    console.log(isAuthorized);
     if (!isAuthorized) {
       res.status(200).json(false);
     } else {
