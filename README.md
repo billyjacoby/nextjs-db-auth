@@ -5,4 +5,7 @@ A simple starer to use authentication with a database for NextJS. Written with M
 ## TODO:
 
 ⏹ Move auth functions to a different folder where they are not public
-⏹ Add cookies to user after registering, then redirect to home page
+⏹ Refactor setting cookies into own file
+⏹ Illustrate the login and registration flow somehow
+
+✅ Add cookies to user after registering, then redirect to home page
