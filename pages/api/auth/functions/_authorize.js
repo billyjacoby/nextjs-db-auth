@@ -9,6 +9,8 @@ export async function _authorize(username, password) {
 
   const userData = await user.findOne({ username });
 
+  console.log(userData);
+
   const savedPassword = userData?.password;
 
   if (savedPassword) {

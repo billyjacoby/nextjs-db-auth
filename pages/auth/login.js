@@ -28,8 +28,8 @@ const FormContainer = styled.form`
 
 const Button = styled.button``;
 
-export default function Login({ isAuthenticated }) {
-  const [isAuth, setIsAuth] = useState(isAuthenticated);
+export default function Login({ user }) {
+  const [isAuth, setIsAuth] = useState(!!user);
 
   const onSubmit = async (e) => {
     e.preventDefault();
